@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#080b11"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="description" content="PES3 Coach 2026 — tactical lab, match simulator, dan academy interaktif untuk strategi PES PS3."/>
+<title>PES3 Coach 2026 — Tactical Lab</title>
+<link rel="manifest" href="./manifest.webmanifest"/>
+<link rel="icon" href="./assets/icons/icon-192.png" sizes="192x192"/>
+<link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png"/>
+<link rel="stylesheet" href="./css/base.css"/>
+<link rel="stylesheet" href="./css/academy.css"/>
+<link rel="stylesheet" href="./css/app.css"/>
+</head>
+<body><div class="wrap">
+<div class="appHead">
+  <div class="headRow"><div><div class="eyebrow">PES PS3 • GEMBOX 2026</div><h1>PES3 COACH</h1></div><div style="display:flex;align-items:center;gap:6px"><button id="installApp" class="installBtn" hidden>⬇ INSTALL APP</button><span class="versionPill">v1.3 • PWA</span></div></div>
+  <div class="sub" id="counter"></div>
+  <div class="netPill"><span id="netDot" class="netDot"></span><span id="netState">ONLINE</span> • bisa dipasang di Android</div>
+</div>
+<div class="tabs"><button class="tabBtn active" data-tab="tabTactics">⚙ TAKTIK</button><button class="tabBtn" data-tab="tabMatch">⚔ MATCH LAB</button><button class="tabBtn" data-tab="tabAcademy">🎮 ACADEMY</button></div>
+
+<section id="tabTactics" class="tabPage">
+  <div class="hero"><h2>TACTICAL LAB</h2><p>Pilih tim, ubah setting secara live, simpan formasi custom, dan lihat pola serangan bergerak seperti tactical game.</p></div>
+  <div class="card selectors">
+    <div><label class="small">TIM / NEGARA</label><select id="team"></select></div>
+    <div><label class="small">STRATEGI / FORMASI</label><select id="preset"></select></div>
+  </div>
+  <div class="titleRow"><div id="formationTitle"></div><span class="dna" id="dnaBadge">★ CLUB DNA</span></div>
+  <div class="pitchWrap" id="pitchWrap">
+    <div class="pitch"><div class="goal"></div><div class="half"></div><div class="circle"></div><div class="spot"></div><div class="boxTop"></div><div class="boxBottom"></div><div class="sixTop"></div><div class="sixBottom"></div></div>
+    <div id="compactZone"></div><div id="defLine"></div><div id="supportZone"></div>
+    <svg id="route"></svg><div id="players"></div><div id="ball"></div><div id="eventBadge"></div><div id="goalText">GOAL!</div><div id="editBadge">EDIT MODE • DRAG PEMAIN</div>
+  </div>
+  <div class="actions"><button class="play" id="play">▶ SIMULASI</button><button class="edit" id="edit">✥ EDIT</button><button class="save" id="save">✓ SIMPAN</button></div>
+  <button class="favorite" id="favorite">☆ TAMBAH KE FAVORIT</button>
+  <div class="metrics"><div class="metric"><div class="mk">SUPPORT</div><div class="mv" id="metricSupport">—</div></div><div class="metric"><div class="mk">DEF LINE</div><div class="mv" id="metricLine">—</div></div><div class="metric"><div class="mk">COMPACT</div><div class="mv" id="metricCompact">—</div></div></div>
+  <div class="speed">Kecepatan simulasi <select id="speed"><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option></select></div>
+  <div class="section">POLA SERANGAN</div><div class="card plan" id="plan"></div>
+  <div class="section">SETTING PES PS3</div><div class="card"><div class="settingsGrid" id="settings"></div></div>
+  <div class="sliderHead"><span>Support Range</span><span id="supportVal"></span></div><input id="support" type="range" min="1" max="10"/>
+  <div class="sliderHead"><span>Defensive Line</span><span id="lineVal"></span></div><input id="lineSlider" type="range" min="1" max="10"/>
+  <div class="sliderHead"><span>Compactness</span><span id="compactVal"></span></div><input id="compactSlider" type="range" min="1" max="10"/>
+  <div class="section">COACH ANALYSIS</div><div class="card explain" id="explain"></div><div class="card tip explain" id="tip" style="margin-top:10px"></div>
+</section>
+
+<section id="tabMatch" class="tabPage hidden">
+  <div class="hero"><h2>MATCH LAB • 11v11</h2><p>Pilih lawan dan taktiknya. Coach Engine akan membaca pressure, garis pertahanan, compactness dan style lawan, lalu menyiapkan counter tactic.</p></div>
+  <div class="card"><label class="small">TIM KAMU • mengikuti Tactical Lab</label><div id="matchOur" style="font-size:16px;font-weight:900"></div></div>
+  <div class="card matchSelectors" style="margin-top:10px"><div><label class="small">LAWAN</label><select id="matchOppTeam"></select></div><div><label class="small">TAKTIK LAWAN</label><select id="matchOppPreset"></select></div></div>
+  <div class="section">KONDISI PERTANDINGAN</div><div class="stateGrid"><button class="stateBtn active" data-state="NORMAL">0–0 / NORMAL</button><button class="stateBtn" data-state="UNGGUL">SEDANG UNGGUL</button><button class="stateBtn" data-state="TERTINGGAL">TERTINGGAL</button></div>
+  <button class="play" id="matchAnalyze" style="width:100%;margin-top:9px">✦ ANALISIS & BUAT COUNTER TACTIC</button>
+  <div class="card threatRow" style="margin-top:10px"><span class="pill threat" id="matchThreat">THREAT —</span><div class="recommend" id="matchRecommend">Pilih lawan untuk dianalisis</div></div>
+  <div class="matchPitch" id="matchPitch">
+    <div class="pitch"><div class="goal"></div><div class="half"></div><div class="circle"></div><div class="spot"></div><div class="boxTop"></div><div class="boxBottom"></div><div class="sixTop"></div><div class="sixBottom"></div></div>
+    <svg class="matchRoute" id="matchRoute"></svg><div class="matchLayer" id="matchOpponents"></div><div class="matchLayer" id="matchPlayers"></div><div class="matchBall" id="matchBall"></div><div class="matchBadge" id="matchBadge">READY • 11v11</div>
+  </div>
+  <div class="matchActions"><button class="play" id="matchPlay">▶ SIMULASI 11v11</button><button class="save" id="matchApply">✓ PAKAI TAKTIK</button></div>
+  <div class="section">MATCHUP REPORT</div><div class="card report" id="matchReport">Pilih lawan untuk melihat analisis.</div>
+</section>
+
+<section id="tabAcademy" class="tabPage hidden">
+  <div class="hero"><h2>PES3 ACADEMY • CHALLENGE</h2><p>Belajar passing, shooting, bertahan, set piece dan skill. Challenge Mode menilai keputusan dan timing, bukan hanya menampilkan animasi.</p></div>
+  <div class="card scoreCard"><span>PROGRESS</span><b id="academyScore">0 XP • STREAK 0</b></div>
+  <div class="card academySelectors" style="margin-top:10px"><div><label class="small">KATEGORI</label><select id="academyCat"></select></div><div><label class="small">LATIHAN</label><select id="academyDrill"></select></div></div>
+  <div class="academyPitch" id="academyPitch">
+    <div class="apitch"></div><div class="ahalf"></div><div class="acircle"></div><div class="abox"></div><div class="agoal"></div>
+    <svg id="academyRoute"></svg><div id="academyActors"></div><div id="academyBall"></div><div id="academyBadge">READY</div><div id="academyResult"></div>
+    <div class="academyTiming" id="academyTiming"><div class="ideal"></div><div class="marker" id="academyMarker"></div></div>
+  </div>
+  <div class="academyActions"><button class="edit" id="academyPlay">▶ DEMO</button><button class="play" id="academyChallenge">🎮 MULAI CHALLENGE</button></div>
+  <div class="challengeHint" id="challengeHint">Tekan Challenge, tunggu marker mendekati zona emas, lalu pilih aksi.</div>
+  <div class="challengeGrid"><button class="challengeBtn" id="aChoice0">AKSI 1</button><button class="challengeBtn" id="aChoice1">AKSI 2</button><button class="challengeBtn" id="aChoice2">AKSI 3</button><button class="challengeBtn" id="aChoice3">AKSI 4</button></div>
+  <button class="favorite" id="academyReset">↺ RESET LATIHAN</button>
+  <div class="card explain academyInfo" id="academyInfo" style="margin-top:10px"></div>
+  <div class="academyNote">Kontrol memakai konfigurasi default/classic PES PS3. Jika Command Configuration Gembox diubah, ikuti fungsi perintahnya. Timing, power, dan efek dipengaruhi atribut pemain dan situasi.</div>
+</section>
+</div><div class="toast" id="toast"></div>
+
+
+<script src="./js/core.js"></script>
+<script src="./js/academy.js"></script>
+<script src="./js/ui.js"></script>
+<script src="./js/matchlab.js"></script>
+<script src="./js/challenge.js"></script>
+<script src="./js/pwa.js"></script>
+</body>
+</html>
