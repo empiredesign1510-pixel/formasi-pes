@@ -1,8 +1,8 @@
-const CACHE = 'pes3-coach-v1-4-1-pwa-2';
+const CACHE = 'pes3-coach-v1-5-pwa-1';
 const APP_SHELL = [
   './','./index.html','./manifest.webmanifest',
-  './css/base.css','./css/academy.css','./css/app.css',
-  './js/core.js','./js/academy.js','./js/ui.js','./js/matchlab.js','./js/challenge.js','./js/v14.js','./js/pwa.js',
+  './css/base.css','./css/academy.css','./css/app.css','./css/free-kick.css',
+  './js/core.js','./js/academy.js','./js/ui.js','./js/matchlab.js','./js/challenge.js','./js/v14.js','./js/free-kick.js','./js/pwa.js',
   './assets/icons/icon-192.png','./assets/icons/icon-512.png','./assets/icons/icon-maskable-512.png','./assets/icons/apple-touch-icon.png'
 ];
 

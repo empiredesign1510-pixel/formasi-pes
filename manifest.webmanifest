@@ -1,7 +1,7 @@
 {
   "name":"PES3 Coach 2026 — Tactical Training Game",
   "short_name":"PES3 Coach",
-  "description":"Tactical Lab, 11v11 Match Engine, Academy, Problem Solver, dan Set Piece Lab untuk PES PS3 Gembox.",
+  "description":"Tactical Lab, Match Engine, Academy, Free Kick Arena, Problem Solver, dan Set Piece Lab untuk PES PS3 Gembox.",
   "id":"./",
   "start_url":"./",
   "scope":"./",
@@ -19,6 +19,7 @@
   "shortcuts":[
     {"name":"Tactical Lab","short_name":"Tactics","url":"./?open=tactics","icons":[{"src":"./assets/icons/icon-192.png","sizes":"192x192"}]},
     {"name":"Match Lab","short_name":"Match","url":"./?open=match","icons":[{"src":"./assets/icons/icon-192.png","sizes":"192x192"}]},
-    {"name":"Academy","short_name":"Academy","url":"./?open=academy","icons":[{"src":"./assets/icons/icon-192.png","sizes":"192x192"}]}
+    {"name":"Academy","short_name":"Academy","url":"./?open=academy","icons":[{"src":"./assets/icons/icon-192.png","sizes":"192x192"}]},
+    {"name":"Free Kick Arena","short_name":"Free Kick","url":"./?open=freekick","icons":[{"src":"./assets/icons/icon-192.png","sizes":"192x192"}]}
   ]
 }

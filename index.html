@@ -15,13 +15,14 @@
 <link rel="stylesheet" href="./css/base.css"/>
 <link rel="stylesheet" href="./css/academy.css"/>
 <link rel="stylesheet" href="./css/app.css"/>
+<link rel="stylesheet" href="./css/free-kick.css"/>
 </head>
 <body>
 <div class="appShell">
   <header class="appTopbar">
     <div>
       <div class="eyebrow">PES PS3 • GEMBOX 2026</div>
-      <div class="brandRow"><h1>PES3 COACH</h1><span class="versionPill">v1.4</span></div>
+      <div class="brandRow"><h1>PES3 COACH</h1><span class="versionPill">v1.5</span></div>
     </div>
     <div class="topActions">
       <button id="installApp" class="iconBtn installBtn" hidden aria-label="Install aplikasi">⬇</button>
@@ -68,6 +69,7 @@
         <button class="quickCard" data-open-page="pageTactics"><span>⚙</span><strong>Tactical Lab</strong><small>Formasi & setting</small></button>
         <button class="quickCard" data-open-page="pageMatch"><span>⚔</span><strong>Match Lab</strong><small>11v11 & counter</small></button>
         <button class="quickCard" data-open-page="pageAcademy"><span>🎮</span><strong>Academy</strong><small>Skill challenge</small></button>
+        <button class="quickCard freeKickQuick" data-open-page="pageFreeKick"><span>⚽</span><strong>Free Kick Arena</strong><small>Swipe • curve • score</small></button>
         <button class="quickCard" data-open-page="pageCoach"><span>🧠</span><strong>Coach Tools</strong><small>Solver & set piece</small></button>
       </div>
 
@@ -137,7 +139,89 @@
       <div class="challengeGrid"><button class="challengeBtn" id="aChoice0">AKSI 1</button><button class="challengeBtn" id="aChoice1">AKSI 2</button><button class="challengeBtn" id="aChoice2">AKSI 3</button><button class="challengeBtn" id="aChoice3">AKSI 4</button></div>
       <button class="favorite" id="academyReset">↺ RESET LATIHAN</button>
       <div class="card explain academyInfo" id="academyInfo" style="margin-top:10px"></div>
+      <button class="freeKickAcademyCta" data-open-page="pageFreeKick"><span>⚽</span><div><small>NEW GAME MODE</small><strong>FREE KICK ARENA</strong><em>Gambar arah tendangan dengan jari, lengkungkan bola, lewati pagar, kalahkan kiper.</em></div><b>PLAY ›</b></button>
       <div class="academyNote">Kontrol memakai konfigurasi default/classic PES PS3. Jika Command Configuration Gembox diubah, ikuti fungsi perintahnya.</div>
+    </section>
+
+    <section id="pageFreeKick" class="appPage hidden freeKickPage">
+      <div class="pageHeader freeKickHeader"><button class="backHome" data-open-page="pageAcademy">‹</button><div><small>SKILL GAME • v1.5</small><h2>Free Kick Arena</h2></div><button id="fkSound" class="iconBtn" aria-label="Suara">🔊</button></div>
+
+      <div class="fkHud">
+        <div><small>SCORE</small><strong id="fkScore">0</strong></div>
+        <div><small>BEST</small><strong id="fkBest">0</strong></div>
+        <div><small>COMBO</small><strong id="fkCombo">x1.0</strong></div>
+        <div><small>BALL</small><strong><span id="fkBalls">5</span>/5</strong></div>
+      </div>
+
+      <div class="fkChallenge card">
+        <div class="fkChallengeIcon">🏆</div>
+        <div><small>CHALLENGE</small><strong id="fkChallengeTitle">Pemanasan</strong><p id="fkChallengeDesc">Cetak 2 gol dari 5 tendangan.</p></div>
+        <span id="fkChallengeProgress">0/2</span>
+      </div>
+
+      <div class="fkToolbar card">
+        <label><small>DIFFICULTY</small><select id="fkDifficulty"><option value="rookie">Rookie</option><option value="pro" selected>Pro</option><option value="legend">Legend</option></select></label>
+        <label><small>DISTANCE</small><select id="fkDistance"><option value="18">18 m</option><option value="22" selected>22 m</option><option value="27">27 m</option><option value="30">30 m</option></select></label>
+        <div class="fkWind"><small>WIND</small><strong id="fkWind">→ 0.0</strong></div>
+      </div>
+
+      <div class="fkArena" id="fkArena">
+        <canvas id="fkCanvas" width="900" height="1200" aria-label="Arena tendangan bebas interaktif"></canvas>
+        <div class="fkTopOverlay">
+          <span class="fkDistanceBadge" id="fkDistanceBadge">22 m</span>
+          <span class="fkStatusBadge" id="fkStatus">READY</span>
+        </div>
+        <div class="fkInstruction" id="fkInstruction">
+          <div class="swipeHand">☝</div>
+          <strong>USAP DARI BOLA KE GAWANG</strong>
+          <small>Gambar garis melengkung. Cepat = power, lengkung = curl.</small>
+        </div>
+        <div class="fkShotResult" id="fkShotResult" hidden>
+          <small id="fkResultLabel">GOAL</small>
+          <strong id="fkResultPoints">+1,450</strong>
+          <span id="fkResultGrade">A</span>
+        </div>
+      </div>
+
+      <div class="fkMeters">
+        <div class="fkMeter"><div><span>POWER</span><b id="fkPowerVal">0</b></div><i><u id="fkPowerBar"></u></i></div>
+        <div class="fkMeter"><div><span>CURVE</span><b id="fkCurveVal">0</b></div><i><u id="fkCurveBar"></u></i></div>
+        <div class="fkMeter"><div><span>ACCURACY</span><b id="fkAccuracyVal">—</b></div><i><u id="fkAccuracyBar"></u></i></div>
+      </div>
+
+      <div class="fkTip card" id="fkCoachTip"><b>COACH TIP</b><span>Mulai usapan dari bola. Untuk curl, buat gerakan seperti huruf “C” menuju sudut gawang.</span></div>
+
+      <div class="fkActions">
+        <button class="favorite" id="fkReplay">↻ REPLAY PATH</button>
+        <button class="play" id="fkNewRound">NEW ROUND</button>
+      </div>
+
+      <div class="fkScoreboard card">
+        <div><small>GOALS</small><strong id="fkGoals">0</strong></div>
+        <div><small>SAVES</small><strong id="fkSaves">0</strong></div>
+        <div><small>POST</small><strong id="fkPosts">0</strong></div>
+        <div><small>WALL</small><strong id="fkWalls">0</strong></div>
+      </div>
+
+      <div class="sectionTitleRow"><div><small>HOW TO PLAY</small><h3>Gesture Guide</h3></div></div>
+      <div class="fkGestureGuide">
+        <div><span>↟</span><strong>Straight</strong><small>Power shot</small></div>
+        <div><span>↗</span><strong>Diagonal</strong><small>Target corner</small></div>
+        <div><span>⤴</span><strong>Curve</strong><small>Bend around wall</small></div>
+        <div><span>⌁</span><strong>S-curve</strong><small>Knuckle / risky</small></div>
+      </div>
+
+      <div id="fkRoundModal" class="fkRoundModal" hidden>
+        <div class="fkRoundCard">
+          <small>ROUND COMPLETE</small>
+          <h2 id="fkRoundTitle">GREAT SESSION!</h2>
+          <div class="fkStars" id="fkStars">★★★</div>
+          <div class="fkRoundStats"><div><small>SCORE</small><strong id="fkRoundScore">0</strong></div><div><small>GOALS</small><strong id="fkRoundGoals">0/5</strong></div><div><small>RATING</small><strong id="fkRoundRating">A</strong></div></div>
+          <p id="fkRoundMessage">Challenge selesai.</p>
+          <button class="play fullBtn" id="fkRoundAgain">MAIN LAGI</button>
+          <button class="favorite fullBtn" id="fkRoundClose">KEMBALI KE ARENA</button>
+        </div>
+      </div>
     </section>
 
     <section id="pageCoach" class="appPage hidden">
@@ -197,6 +281,7 @@
 <script src="./js/matchlab.js"></script>
 <script src="./js/challenge.js"></script>
 <script src="./js/v14.js"></script>
+<script src="./js/free-kick.js"></script>
 <script src="./js/pwa.js"></script>
 </body>
 </html>

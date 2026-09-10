@@ -1,33 +1,48 @@
-# Hotfix v1.4.1
-
-- Memperbaiki update banner yang tetap terlihat meskipun atribut `hidden` aktif.
-- Menambahkan tombol × untuk menutup notifikasi update.
-- Update banner sekarang hanya muncul saat benar-benar ada service worker versi baru yang menunggu.
-- Memperbaiki cache PWA agar CSS/JS versi lama tidak tertahan setelah redeploy Vercel.
-- Tombol UPDATE kini menampilkan status MEMUAT… dan banner otomatis hilang saat controller baru aktif.
-
 # Changelog
 
-## v1.4.0
+## v1.5.0 — Free Kick Arena
 
-### Upgrade besar
-- UI/UX mobile-first baru dengan Home Dashboard dan bottom navigation.
-- Tactical Lab 2.0 dengan search/filter, copy tactic, recent tactics, tactical read, dan panel segmented.
-- Match Engine 2.0 dengan scoreboard, match clock, interactive decision window, AI press movement, turnover/counter, dan hasil finishing variatif.
-- Problem Solver + rekomendasi setting yang dapat diterapkan langsung ke Tactical Lab.
-- Set Piece Lab interaktif.
-- Controller guide di Academy.
-- Profile/level/skill progression.
-- Export/import backup JSON.
-- PWA update banner dan cache strategy yang diperbaiki.
+### New game mode
+- Free Kick Arena berbasis gesture/swipe layar.
+- Pengguna memulai usapan dari bola lalu menggambar arah tendangan sendiri.
+- Gesture memengaruhi power, curl/curve, target kiri-kanan, dan ketinggian tendangan.
+- Jalur gesture divisualisasikan langsung di arena.
+- Bola dianimasikan mengikuti karakter gesture, termasuk pengaruh angin ringan.
+- Ilustrasi pemain penendang, pagar hidup, kiper, gawang, net, stadion, dan bola dibuat langsung di canvas.
+- Animasi run-up/kick, pagar melompat, kiper diving, trajectory/trail, serta feedback hasil.
 
-### Bug fixes
-- Memperbaiki referensi DOM `counter` yang dapat memutus inisialisasi aplikasi setelah migrasi layout.
-- Menghilangkan dependensi pada tab header lama yang sudah tidak ada.
-- Menambahkan guard untuk elemen UI opsional agar perubahan layout tidak menyebabkan null reference.
-- Memperbaiki alur service worker agar update tidak langsung mengganti sesi aktif tanpa pemberitahuan.
-- Memperbaiki cache versioning dan membersihkan cache versi lama saat aktivasi.
-- Memperbaiki sinkronisasi scoreboard saat tim/lawan berubah.
-- Menambahkan reset Match Engine dan pembatalan run lama agar animasi tidak tumpang tindih.
-- Menambahkan validasi import backup.
-- Memastikan semua asset utama dapat disajikan sebagai static deployment tanpa build step.
+### Shot outcomes
+- Goal.
+- Top Bins bonus.
+- Great Save.
+- Hit the Post / Crossbar.
+- Blocked by Wall.
+- Wide / Over.
+
+### Scoring & progression
+- 5 bola per round.
+- Score, best score, combo multiplier, goals, saves, post, dan wall counter.
+- Grade per tendangan: S/A/B/C/D.
+- Power, Curve, dan Accuracy meter.
+- Challenge rotation: Pemanasan, Bend It, Top Bins, Wall Breaker, Clutch Combo, Points Hunter.
+- Round result dengan 1–3 stars dan rating.
+- Progress/high score/challenge disimpan di localStorage.
+
+### Gameplay options
+- Difficulty: Rookie, Pro, Legend.
+- Distance: 18m, 22m, 27m, 30m.
+- Dynamic wind.
+- Replay last path.
+- Sound toggle dan vibration feedback bila perangkat mendukung.
+
+### UI/UX
+- Free Kick Arena card di Home.
+- CTA Free Kick Arena di Academy.
+- Halaman mobile-first khusus Free Kick dengan HUD game-style.
+- Gesture guide dan contextual Coach Tip.
+
+### PWA
+- Cache dinaikkan ke `pes3-coach-v1-5-pwa-1`.
+- `free-kick.css` dan `free-kick.js` dimasukkan ke app shell.
+- Manifest shortcut Free Kick Arena ditambahkan.
+- Hotfix update banner v1.4.1 tetap dipertahankan.

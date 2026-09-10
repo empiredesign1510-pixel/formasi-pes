@@ -1,50 +1,30 @@
-> Hotfix PWA v1.4.1: update banner dan cache Vercel/service worker diperbaiki.
+# PES3 Coach 2026 v1.5
 
-# PES3 Coach 2026 v1.4
+PWA mobile-first untuk formasi, setting taktik, Match Lab 11v11, Academy, Problem Solver, Set Piece Lab, dan **Free Kick Arena** interaktif.
 
-PWA mobile-first untuk belajar formasi, setting, simulasi taktik, pengambilan keputusan, bertahan, passing, shooting, set piece, dan counter tactic PES PS3/Gembox.
+## Highlight v1.5 — Free Kick Arena
+Free Kick Arena dibuat seperti mini-game. Pengguna mengusap layar dari bola menuju gawang dan menggambar sendiri jalur tendangan. Kecepatan swipe memengaruhi power, bentuk swipe memengaruhi curve/curl, dan arah akhir memengaruhi target. Arena memiliki pagar pertahanan, kiper dengan tingkat kemampuan berbeda, wind, post/crossbar, goal detection, score, combo, grade, challenge, replay, dan round rating.
 
-## Fitur utama v1.4
+Tidak dibutuhkan library game eksternal. Gameplay menggunakan Canvas API + Pointer Events sehingga dapat dimainkan dengan touch di Android maupun mouse/pen di desktop.
 
-- Home Dashboard baru dengan level, XP, streak, favorit, recent tactics, dan daily challenge.
-- Tactical Lab 2.0 dengan pencarian taktik, Club DNA, drag player, support/def line/compactness live, Play Tactic, favorit, copy tactic, dan tactical read.
-- Match Engine 2.0 dengan scoreboard, menit pertandingan, 11v11, AI movement, decision window, turnover, counter lawan, save, block, corner, wide, dan goal probability.
-- Problem Solver untuk masalah: passing sering dipotong, through ball, tiki-taka, pressing, crossing, park the bus, dan finishing.
-- Set Piece Lab dengan corner near/far/short, free kick curve/power/layoff, penalty, dan panenka.
-- Academy dengan challenge timing, XP/streak, controller guide, dan tutorial skill.
-- Profile skill rating: Passing, Shooting, Defending, Tactical IQ.
-- Backup & restore local data ke file JSON.
-- PWA installable, offline shell, network indicator, dan update banner saat versi baru tersedia.
-- Bottom navigation yang lebih nyaman di layar HP.
-
-## Menjalankan lokal
-
-Karena ada Service Worker, jangan membuka langsung dengan `file://`. Jalankan HTTP server sederhana:
+## Cara menjalankan lokal
+Gunakan local HTTP server agar Service Worker/PWA berfungsi.
 
 ```bash
-python3 -m http.server 8080
+python -m http.server 8080
 ```
 
 Lalu buka `http://localhost:8080`.
 
 ## Deploy GitHub → Vercel
+Upload **isi folder ini** ke root repository GitHub, sehingga `index.html` berada langsung di root repository. Di Vercel gunakan Framework Preset `Other`; build command dan output directory dapat dikosongkan.
 
-Project ini tidak membutuhkan Node.js atau build command.
+## Struktur penting
+- `index.html` — shell aplikasi dan semua page.
+- `css/free-kick.css` — UI Free Kick Arena.
+- `js/free-kick.js` — gesture, trajectory, goalkeeper AI, scoring, challenge, dan canvas renderer.
+- `service-worker.js` — offline cache/PWA.
+- `manifest.webmanifest` — metadata instalasi PWA.
 
-1. Push seluruh isi folder ke repository GitHub.
-2. Import repository tersebut di Vercel.
-3. Framework Preset: `Other`.
-4. Root Directory: `./`.
-5. Build Command: kosong.
-6. Output Directory: kosong.
-7. Deploy.
-
-Setelah repository terhubung, setiap push ke branch production akan memicu deployment baru.
-
-## Data
-
-Progress disimpan di `localStorage`. Gunakan menu Coach → Profile → Export Backup sebelum membersihkan data browser atau berpindah perangkat.
-
-## Catatan
-
-Kontrol tutorial mengacu pada konfigurasi default/classic PES PS3. Jika tombol pada patch Gembox pengguna telah diubah, ikuti fungsi command masing-masing.
+## Data lokal
+Free Kick menyimpan best score, challenge aktif, XP internal, dan setting sound di `localStorage`. Data existing Tactical Lab/Academy tetap dipertahankan.
