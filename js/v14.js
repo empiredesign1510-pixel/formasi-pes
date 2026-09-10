@@ -232,8 +232,8 @@
     if(el('academyXpMini'))el('academyXpMini').textContent=xp();
   }
   function exportBackup(){
-    const data={app:'PES3 Coach 2026',version:'1.4.0',exportedAt:new Date().toISOString(),storage:{}};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(APP_PREFIXES.some(p=>k.startsWith(p)))data.storage[k]=localStorage.getItem(k)}
-    const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='PES3Coach2026-backup-v1.4.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toastMsg('Backup diekspor.')
+    const data={app:'PES3 Coach 2026',version:'1.5.0',exportedAt:new Date().toISOString(),storage:{}};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(APP_PREFIXES.some(p=>k.startsWith(p)))data.storage[k]=localStorage.getItem(k)}
+    const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='PES3Coach2026-backup-v1.5.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toastMsg('Backup diekspor.')
   }
   el('exportData')?.addEventListener('click',exportBackup);
   el('importData')?.addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{const data=JSON.parse(await file.text());if(!data.storage||typeof data.storage!=='object')throw new Error('Format backup tidak valid');Object.entries(data.storage).forEach(([k,v])=>{if(APP_PREFIXES.some(p=>k.startsWith(p)))localStorage.setItem(k,String(v))});toastMsg('Backup berhasil diimpor. Memuat ulang...');setTimeout(()=>location.reload(),600)}catch(err){toastMsg('Import gagal: '+err.message)}finally{e.target.value=''}});
@@ -243,5 +243,5 @@
   el('quickProfile')?.addEventListener('click',()=>setTimeout(()=>document.querySelector('[data-coach-panel="profilePanel"]')?.click(),20));
   syncScoreboard();refreshTacticMeta();recordRecent();updateController();refreshHome();
   const route=new URLSearchParams(location.search).get('open');
-  if(route){const map={home:'pageHome',tactics:'pageTactics',match:'pageMatch',academy:'pageAcademy',coach:'pageCoach'};if(map[route])setTimeout(()=>openPage(map[route]),40)}
+  if(route){const map={home:'pageHome',tactics:'pageTactics',match:'pageMatch',academy:'pageAcademy',freekick:'pageFreeKick',coach:'pageCoach'};if(map[route])setTimeout(()=>openPage(map[route]),40)}
 })();

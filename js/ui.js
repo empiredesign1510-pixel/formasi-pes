@@ -1,7 +1,8 @@
 // ===== v1.4 Navigation / Favorites / Live Metrics =====
 function openPage(pageId){
   document.querySelectorAll('.appPage').forEach(page=>page.classList.toggle('hidden',page.id!==pageId));
-  document.querySelectorAll('.navBtn').forEach(btn=>btn.classList.toggle('active',btn.dataset.page===pageId));
+  const navPage=pageId==='pageFreeKick'?'pageAcademy':pageId;
+  document.querySelectorAll('.navBtn').forEach(btn=>btn.classList.toggle('active',btn.dataset.page===navPage));
   window.scrollTo({top:0,behavior:'smooth'});
   try{
     if(pageId==='pageMatch' && typeof matchAnalyze==='function') setTimeout(matchAnalyze,30);
