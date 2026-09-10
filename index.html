@@ -183,7 +183,13 @@
   </nav>
 </div>
 <div class="toast" id="toast"></div>
-<div class="updateBanner" id="updateBanner" hidden><span>Versi baru tersedia.</span><button id="applyUpdate">UPDATE</button></div>
+<div class="updateBanner" id="updateBanner" hidden role="status" aria-live="polite">
+  <span>Versi baru tersedia.</span>
+  <div class="updateActions">
+    <button id="applyUpdate" type="button">UPDATE</button>
+    <button id="dismissUpdate" class="updateDismiss" type="button" aria-label="Tutup pemberitahuan update">×</button>
+  </div>
+</div>
 
 <script src="./js/core.js"></script>
 <script src="./js/academy.js"></script>

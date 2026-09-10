@@ -1,3 +1,5 @@
+> Hotfix PWA v1.4.1: update banner dan cache Vercel/service worker diperbaiki.
+
 # PES3 Coach 2026 v1.4
 
 PWA mobile-first untuk belajar formasi, setting, simulasi taktik, pengambilan keputusan, bertahan, passing, shooting, set piece, dan counter tactic PES PS3/Gembox.

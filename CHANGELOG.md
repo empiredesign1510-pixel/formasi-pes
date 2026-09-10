@@ -1,3 +1,11 @@
+# Hotfix v1.4.1
+
+- Memperbaiki update banner yang tetap terlihat meskipun atribut `hidden` aktif.
+- Menambahkan tombol × untuk menutup notifikasi update.
+- Update banner sekarang hanya muncul saat benar-benar ada service worker versi baru yang menunggu.
+- Memperbaiki cache PWA agar CSS/JS versi lama tidak tertahan setelah redeploy Vercel.
+- Tombol UPDATE kini menampilkan status MEMUAT… dan banner otomatis hilang saat controller baru aktif.
+
 # Changelog
 
 ## v1.4.0
