@@ -7,8 +7,8 @@
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="description" content="PES3 Coach 2026 — tactical lab, match simulator, dan academy interaktif untuk strategi PES PS3."/>
-<title>PES3 Coach 2026 — Tactical Lab</title>
+<meta name="description" content="PES3 Coach 2026 — tactical trainer, match simulator, academy, problem solver, dan set-piece lab untuk PES PS3 Gembox."/>
+<title>PES3 Coach 2026 — Tactical Training Game</title>
 <link rel="manifest" href="./manifest.webmanifest"/>
 <link rel="icon" href="./assets/icons/icon-192.png" sizes="192x192"/>
 <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png"/>
@@ -16,77 +16,181 @@
 <link rel="stylesheet" href="./css/academy.css"/>
 <link rel="stylesheet" href="./css/app.css"/>
 </head>
-<body><div class="wrap">
-<div class="appHead">
-  <div class="headRow"><div><div class="eyebrow">PES PS3 • GEMBOX 2026</div><h1>PES3 COACH</h1></div><div style="display:flex;align-items:center;gap:6px"><button id="installApp" class="installBtn" hidden>⬇ INSTALL APP</button><span class="versionPill">v1.3 • PWA</span></div></div>
-  <div class="sub" id="counter"></div>
-  <div class="netPill"><span id="netDot" class="netDot"></span><span id="netState">ONLINE</span> • bisa dipasang di Android</div>
+<body>
+<div class="appShell">
+  <header class="appTopbar">
+    <div>
+      <div class="eyebrow">PES PS3 • GEMBOX 2026</div>
+      <div class="brandRow"><h1>PES3 COACH</h1><span class="versionPill">v1.4</span></div>
+    </div>
+    <div class="topActions">
+      <button id="installApp" class="iconBtn installBtn" hidden aria-label="Install aplikasi">⬇</button>
+      <button id="quickProfile" class="profileMini" data-open-page="pageCoach" aria-label="Buka profil"><span>LV</span><b id="topLevel">1</b></button>
+    </div>
+  </header>
+
+  <main class="mainContent">
+    <div id="counter" class="appCounter"></div>
+    <section id="pageHome" class="appPage">
+      <div class="homeHero">
+        <div>
+          <div class="statusLine"><span class="netPill"><span id="netDot" class="netDot"></span><span id="netState">ONLINE</span></span><span class="softPill">TACTICAL TRAINING GAME</span></div>
+          <h2>Jadi lebih sulit dibaca.<br/><span>Lebih cepat mengambil keputusan.</span></h2>
+          <p>Latih formasi, keputusan passing, bertahan, set piece, dan counter tactic dalam satu aplikasi.</p>
+        </div>
+        <div class="levelRing"><div><small>LEVEL</small><strong id="homeLevel">1</strong><span id="homeRank">BEGINNER</span></div></div>
+      </div>
+
+      <div class="homeStats">
+        <div class="statCard"><small>ACADEMY XP</small><strong id="homeXp">0</strong><span>total latihan</span></div>
+        <div class="statCard"><small>STREAK</small><strong id="homeStreak">0</strong><span>keputusan benar</span></div>
+        <div class="statCard"><small>FAVORIT</small><strong id="homeFavs">0</strong><span>taktik tersimpan</span></div>
+      </div>
+
+      <button class="continueCard" id="continueTraining">
+        <div class="continueIcon">▶</div>
+        <div><small>CONTINUE TRAINING</small><strong id="continueTitle">Passing Lane Academy</strong><span id="continueSub">Latih keputusan umpan supaya tidak mudah dipotong</span></div>
+        <b>›</b>
+      </button>
+
+      <div class="sectionTitleRow"><div><small>RECOMMENDED FOR YOU</small><h3>Coach Recommendation</h3></div><button class="textBtn" data-open-page="pageCoach">Buka Coach ›</button></div>
+      <div class="recommendGrid">
+        <button class="recommendCard" id="homeProblemCard" data-open-page="pageCoach">
+          <span class="recommendIcon">🧠</span><div><strong>Umpan sering dipotong?</strong><p>Gunakan support dekat, buka badan, dan buat passing triangle.</p></div>
+        </button>
+        <button class="recommendCard" data-open-page="pageMatch">
+          <span class="recommendIcon">⚔</span><div><strong>Lawan sulit dibaca?</strong><p>Scan formasi lawan lalu dapatkan counter tactic.</p></div>
+        </button>
+      </div>
+
+      <div class="sectionTitleRow"><div><small>QUICK PLAY</small><h3>Pilih Mode</h3></div></div>
+      <div class="quickGrid">
+        <button class="quickCard" data-open-page="pageTactics"><span>⚙</span><strong>Tactical Lab</strong><small>Formasi & setting</small></button>
+        <button class="quickCard" data-open-page="pageMatch"><span>⚔</span><strong>Match Lab</strong><small>11v11 & counter</small></button>
+        <button class="quickCard" data-open-page="pageAcademy"><span>🎮</span><strong>Academy</strong><small>Skill challenge</small></button>
+        <button class="quickCard" data-open-page="pageCoach"><span>🧠</span><strong>Coach Tools</strong><small>Solver & set piece</small></button>
+      </div>
+
+      <div class="dailyCard">
+        <div><small>DAILY CHALLENGE</small><strong id="dailyChallengeTitle">Cetak gol maksimal 5 umpan</strong><p id="dailyChallengeDesc">Selesaikan serangan tanpa kehilangan bola.</p></div>
+        <button id="dailyChallengeBtn">MULAI</button>
+      </div>
+
+      <div class="sectionTitleRow"><div><small>RECENT TACTICS</small><h3>Terakhir Dipakai</h3></div></div>
+      <div id="recentTactics" class="recentList"></div>
+    </section>
+
+    <section id="pageTactics" class="appPage hidden">
+      <div class="pageHeader"><button class="backHome" data-open-page="pageHome">‹</button><div><small>TACTICAL LAB 2.0</small><h2>Bangun Game Plan</h2></div><button id="tacticHelp" class="iconBtn">?</button></div>
+      <div class="card searchCard"><span>⌕</span><input id="tacticSearch" type="search" placeholder="Cari tiki-taka, counter, 4-3-3, high press..." autocomplete="off"/></div>
+      <div class="card selectors">
+        <div><label class="small">TIM / NEGARA</label><select id="team"></select></div>
+        <div><label class="small">STRATEGI / FORMASI</label><select id="preset"></select></div>
+      </div>
+      <div class="titleRow"><div><div id="formationTitle"></div><div id="tacticStyleSub" class="mutedLine"></div></div><span class="dna" id="dnaBadge">★ CLUB DNA</span></div>
+      <div class="pitchWrap" id="pitchWrap">
+        <div class="pitch"><div class="goal"></div><div class="half"></div><div class="circle"></div><div class="spot"></div><div class="boxTop"></div><div class="boxBottom"></div><div class="sixTop"></div><div class="sixBottom"></div></div>
+        <div id="compactZone"></div><div id="defLine"></div><div id="supportZone"></div>
+        <svg id="route"></svg><div id="players"></div><div id="ball"></div><div id="eventBadge"></div><div id="goalText">GOAL!</div><div id="editBadge">EDIT MODE • DRAG PEMAIN</div>
+        <div class="pitchLegend"><span><i class="legendSupport"></i>support</span><span><i class="legendLine"></i>def line</span></div>
+      </div>
+      <div class="actions"><button class="play" id="play">▶ PLAY TACTIC</button><button class="edit" id="edit">✥ EDIT</button><button class="save" id="save">✓ SIMPAN</button></div>
+      <div class="secondaryActions"><button class="favorite" id="favorite">☆ TAMBAH KE FAVORIT</button><button id="shareTactic" class="favorite">↗ SALIN TAKTIK</button></div>
+      <div class="metrics"><div class="metric"><div class="mk">SUPPORT</div><div class="mv" id="metricSupport">—</div></div><div class="metric"><div class="mk">DEF LINE</div><div class="mv" id="metricLine">—</div></div><div class="metric"><div class="mk">COMPACT</div><div class="mv" id="metricCompact">—</div></div></div>
+      <div class="speed">Kecepatan simulasi <select id="speed"><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option></select></div>
+      <div class="segmented"><button class="segmentBtn active" data-tactic-panel="panelPlan">POLA</button><button class="segmentBtn" data-tactic-panel="panelSettings">SETTING</button><button class="segmentBtn" data-tactic-panel="panelAnalysis">ANALISIS</button></div>
+      <div id="panelPlan" class="tacticPanel"><div class="card plan" id="plan"></div></div>
+      <div id="panelSettings" class="tacticPanel hidden"><div class="card"><div class="settingsGrid" id="settings"></div></div><div class="sliderHead"><span>Support Range</span><span id="supportVal"></span></div><input id="support" type="range" min="1" max="10"/><div class="sliderHead"><span>Defensive Line</span><span id="lineVal"></span></div><input id="lineSlider" type="range" min="1" max="10"/><div class="sliderHead"><span>Compactness</span><span id="compactVal"></span></div><input id="compactSlider" type="range" min="1" max="10"/></div>
+      <div id="panelAnalysis" class="tacticPanel hidden"><div class="card explain" id="explain"></div><div class="card tip explain" id="tip" style="margin-top:10px"></div><div class="card insightCard" id="tacticInsight" style="margin-top:10px"></div></div>
+    </section>
+
+    <section id="pageMatch" class="appPage hidden">
+      <div class="pageHeader"><button class="backHome" data-open-page="pageHome">‹</button><div><small>MATCH ENGINE 2.0</small><h2>11v11 Tactical Match</h2></div><button id="resetMatch" class="iconBtn">↺</button></div>
+      <div class="scoreboard card"><div class="scoreTeam"><small>KAMU</small><strong id="scoreOurTeam">Bayern</strong></div><div class="scoreCenter"><span id="matchClock">00:00</span><b><span id="scoreOur">0</span> - <span id="scoreOpp">0</span></b><small id="matchPhase">PRE-MATCH</small></div><div class="scoreTeam right"><small>LAWAN</small><strong id="scoreOppTeam">Real Madrid</strong></div></div>
+      <div class="card"><label class="small">TIM KAMU • mengikuti Tactical Lab</label><div id="matchOur" class="matchOurName"></div></div>
+      <div class="card matchSelectors" style="margin-top:10px"><div><label class="small">LAWAN</label><select id="matchOppTeam"></select></div><div><label class="small">TAKTIK LAWAN</label><select id="matchOppPreset"></select></div></div>
+      <div class="stateGrid"><button class="stateBtn active" data-state="NORMAL">0–0 / NORMAL</button><button class="stateBtn" data-state="UNGGUL">SEDANG UNGGUL</button><button class="stateBtn" data-state="TERTINGGAL">TERTINGGAL</button></div>
+      <button class="play fullBtn" id="matchAnalyze">✦ ANALISIS & BUAT COUNTER TACTIC</button>
+      <div class="card threatRow"><span class="pill threat" id="matchThreat">THREAT —</span><div class="recommend" id="matchRecommend">Pilih lawan untuk dianalisis</div></div>
+      <div class="matchPitch" id="matchPitch">
+        <div class="pitch"><div class="goal"></div><div class="half"></div><div class="circle"></div><div class="spot"></div><div class="boxTop"></div><div class="boxBottom"></div><div class="sixTop"></div><div class="sixBottom"></div></div>
+        <svg class="matchRoute" id="matchRoute"></svg><div class="matchLayer" id="matchOpponents"></div><div class="matchLayer" id="matchPlayers"></div><div class="matchBall" id="matchBall"></div><div class="matchBadge" id="matchBadge">READY • 11v11</div>
+        <div class="decisionOverlay" id="decisionOverlay" hidden><small id="decisionPrompt">PASSING LANE TERBUKA</small><strong id="decisionTimer">1.8s</strong><div class="decisionGrid"><button data-match-action="PASS">X PASS</button><button data-match-action="THROUGH">△ THROUGH</button><button data-match-action="CROSS">O CROSS</button><button data-match-action="SHOOT">□ SHOOT</button></div></div>
+      </div>
+      <div class="matchActions"><button class="play" id="matchPlay">▶ PLAY MATCH</button><button class="save" id="matchApply">✓ PAKAI TAKTIK</button></div>
+      <div class="matchEventFeed" id="matchEventFeed"></div>
+      <div class="sectionTitleRow"><div><small>MATCHUP REPORT</small><h3>Coach Scan</h3></div></div><div class="card report" id="matchReport">Pilih lawan untuk melihat analisis.</div>
+    </section>
+
+    <section id="pageAcademy" class="appPage hidden">
+      <div class="pageHeader"><button class="backHome" data-open-page="pageHome">‹</button><div><small>PES3 ACADEMY</small><h2>Skill Challenge</h2></div><div class="xpChip"><span>XP</span><b id="academyXpMini">0</b></div></div>
+      <div class="card scoreCard"><span>PROGRESS</span><b id="academyScore">0 XP • STREAK 0</b></div>
+      <div class="card academySelectors" style="margin-top:10px"><div><label class="small">KATEGORI</label><select id="academyCat"></select></div><div><label class="small">LATIHAN</label><select id="academyDrill"></select></div></div>
+      <div class="controllerHint" id="controllerHint"><div class="controllerBody"><span class="shoulder l">L1</span><span class="shoulder r">R1</span><div class="dpad">✚</div><div class="sticks">● &nbsp;&nbsp; ●</div><div class="faceButtons"><i>△</i><i>○</i><i>×</i><i>□</i></div></div><div><small>CONTROLLER GUIDE</small><strong id="controllerText">Pilih latihan untuk melihat tombol utama.</strong></div></div>
+      <div class="academyPitch" id="academyPitch">
+        <div class="apitch"></div><div class="ahalf"></div><div class="acircle"></div><div class="abox"></div><div class="agoal"></div>
+        <svg id="academyRoute"></svg><div id="academyActors"></div><div id="academyBall"></div><div id="academyBadge">READY</div><div id="academyResult"></div>
+        <div class="academyTiming" id="academyTiming"><div class="ideal"></div><div class="marker" id="academyMarker"></div></div>
+      </div>
+      <div class="academyActions"><button class="edit" id="academyPlay">▶ DEMO</button><button class="play" id="academyChallenge">🎮 MULAI CHALLENGE</button></div>
+      <div class="challengeHint" id="challengeHint">Tekan Challenge, tunggu marker mendekati zona emas, lalu pilih aksi.</div>
+      <div class="challengeGrid"><button class="challengeBtn" id="aChoice0">AKSI 1</button><button class="challengeBtn" id="aChoice1">AKSI 2</button><button class="challengeBtn" id="aChoice2">AKSI 3</button><button class="challengeBtn" id="aChoice3">AKSI 4</button></div>
+      <button class="favorite" id="academyReset">↺ RESET LATIHAN</button>
+      <div class="card explain academyInfo" id="academyInfo" style="margin-top:10px"></div>
+      <div class="academyNote">Kontrol memakai konfigurasi default/classic PES PS3. Jika Command Configuration Gembox diubah, ikuti fungsi perintahnya.</div>
+    </section>
+
+    <section id="pageCoach" class="appPage hidden">
+      <div class="pageHeader"><button class="backHome" data-open-page="pageHome">‹</button><div><small>COACH TOOLS</small><h2>Problem Solver & Set Piece</h2></div><button id="coachHelp" class="iconBtn">?</button></div>
+      <div class="coachTabs"><button class="coachTab active" data-coach-panel="solverPanel">🧠 SOLVER</button><button class="coachTab" data-coach-panel="setPiecePanel">🎯 SET PIECE</button><button class="coachTab" data-coach-panel="profilePanel">👤 PROFILE</button></div>
+
+      <div id="solverPanel" class="coachPanel">
+        <div class="hero compactHero"><h2>Masalah kamu apa?</h2><p>Pilih masalah, gaya lawan, dan kondisi. Coach Engine akan merakit setting yang paling masuk akal untuk dicoba.</p></div>
+        <div class="card coachForm">
+          <div><label class="small">MASALAH UTAMA</label><select id="solverProblem"><option value="intercept">Umpan sering dipotong</option><option value="through">Sering kena through ball</option><option value="tiki">Sulit melawan tiki-taka</option><option value="press">Sulit keluar dari pressing</option><option value="cross">Sering kebobolan crossing/cut-back</option><option value="bus">Sulit bongkar park the bus</option><option value="finish">Sulit mencetak gol</option></select></div>
+          <div><label class="small">GAYA LAWAN</label><select id="solverOpponentStyle"><option value="balanced">Balanced</option><option value="counter">Counter cepat</option><option value="possession">Possession / Tiki-Taka</option><option value="pressing">High Press</option><option value="wing">Main sayap</option><option value="direct">Long Ball / Direct</option></select></div>
+          <div><label class="small">KONDISI</label><select id="solverState"><option value="normal">Normal / 0-0</option><option value="leading">Sedang unggul</option><option value="trailing">Sedang tertinggal</option></select></div>
+        </div>
+        <button id="solveBtn" class="play fullBtn">✦ BUAT REKOMENDASI</button>
+        <div id="solverResult" class="card solverResult"></div>
+        <button id="applySolver" class="save fullBtn">✓ TERAPKAN KE TACTICAL LAB</button>
+      </div>
+
+      <div id="setPiecePanel" class="coachPanel hidden">
+        <div class="hero compactHero"><h2>Set Piece Lab</h2><p>Pelajari corner, free kick, dan penalti dengan animasi jalur bola dan runner.</p></div>
+        <div class="card setPieceControls"><div><label class="small">JENIS</label><select id="setPieceType"><option value="cornerNear">Corner • Near Post</option><option value="cornerFar">Corner • Far Post</option><option value="cornerShort">Corner • Short + Cutback</option><option value="freeCurve">Free Kick • Curve</option><option value="freePower">Free Kick • Power</option><option value="freeLayoff">Free Kick • Layoff</option><option value="penalty">Penalty • Placement</option><option value="panenka">Penalty • Panenka</option></select></div><div><label class="small">POWER</label><input id="setPiecePower" type="range" min="20" max="100" value="62"/></div></div>
+        <div class="setPiecePitch" id="setPiecePitch"><div class="pitch"><div class="goal"></div><div class="boxTop"></div><div class="sixTop"></div></div><svg id="setPieceRoute"></svg><div id="setPieceActors"></div><div id="setPieceBall"></div><div id="setPieceBadge">READY</div></div>
+        <button id="playSetPiece" class="play fullBtn">▶ SIMULASIKAN SET PIECE</button>
+        <div id="setPieceGuide" class="card explain"></div>
+      </div>
+
+      <div id="profilePanel" class="coachPanel hidden">
+        <div class="profileHero card"><div class="profileAvatar">P3</div><div><small>COACH PROFILE</small><h2 id="profileRank">BEGINNER</h2><p id="profileLevelText">Level 1</p></div></div>
+        <div class="skillGrid"><div><span>Passing</span><b id="skillPassing">40</b><i><u id="barPassing"></u></i></div><div><span>Shooting</span><b id="skillShooting">40</b><i><u id="barShooting"></u></i></div><div><span>Defending</span><b id="skillDefending">40</b><i><u id="barDefending"></u></i></div><div><span>Tactical IQ</span><b id="skillTactical">40</b><i><u id="barTactical"></u></i></div></div>
+        <div class="sectionTitleRow"><div><small>DATA</small><h3>Backup & Recovery</h3></div></div>
+        <div class="backupGrid"><button id="exportData" class="favorite">⇩ EXPORT BACKUP</button><label class="favorite fileLabel">⇧ IMPORT BACKUP<input id="importData" type="file" accept="application/json" hidden/></label><button id="resetProgress" class="dangerBtn">RESET PROGRESS</button></div>
+        <div class="card explain"><b>Data tersimpan lokal di perangkat.</b><br/>Export backup untuk memindahkan favorit, XP, streak, pilihan terakhir, dan setting custom ke perangkat lain.</div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottomNav" aria-label="Navigasi utama">
+    <button class="navBtn active" data-page="pageHome"><span>⌂</span><small>Home</small></button>
+    <button class="navBtn" data-page="pageTactics"><span>⚙</span><small>Tactics</small></button>
+    <button class="navBtn" data-page="pageMatch"><span>⚔</span><small>Match</small></button>
+    <button class="navBtn" data-page="pageAcademy"><span>🎮</span><small>Academy</small></button>
+    <button class="navBtn" data-page="pageCoach"><span>🧠</span><small>Coach</small></button>
+  </nav>
 </div>
-<div class="tabs"><button class="tabBtn active" data-tab="tabTactics">⚙ TAKTIK</button><button class="tabBtn" data-tab="tabMatch">⚔ MATCH LAB</button><button class="tabBtn" data-tab="tabAcademy">🎮 ACADEMY</button></div>
-
-<section id="tabTactics" class="tabPage">
-  <div class="hero"><h2>TACTICAL LAB</h2><p>Pilih tim, ubah setting secara live, simpan formasi custom, dan lihat pola serangan bergerak seperti tactical game.</p></div>
-  <div class="card selectors">
-    <div><label class="small">TIM / NEGARA</label><select id="team"></select></div>
-    <div><label class="small">STRATEGI / FORMASI</label><select id="preset"></select></div>
-  </div>
-  <div class="titleRow"><div id="formationTitle"></div><span class="dna" id="dnaBadge">★ CLUB DNA</span></div>
-  <div class="pitchWrap" id="pitchWrap">
-    <div class="pitch"><div class="goal"></div><div class="half"></div><div class="circle"></div><div class="spot"></div><div class="boxTop"></div><div class="boxBottom"></div><div class="sixTop"></div><div class="sixBottom"></div></div>
-    <div id="compactZone"></div><div id="defLine"></div><div id="supportZone"></div>
-    <svg id="route"></svg><div id="players"></div><div id="ball"></div><div id="eventBadge"></div><div id="goalText">GOAL!</div><div id="editBadge">EDIT MODE • DRAG PEMAIN</div>
-  </div>
-  <div class="actions"><button class="play" id="play">▶ SIMULASI</button><button class="edit" id="edit">✥ EDIT</button><button class="save" id="save">✓ SIMPAN</button></div>
-  <button class="favorite" id="favorite">☆ TAMBAH KE FAVORIT</button>
-  <div class="metrics"><div class="metric"><div class="mk">SUPPORT</div><div class="mv" id="metricSupport">—</div></div><div class="metric"><div class="mk">DEF LINE</div><div class="mv" id="metricLine">—</div></div><div class="metric"><div class="mk">COMPACT</div><div class="mv" id="metricCompact">—</div></div></div>
-  <div class="speed">Kecepatan simulasi <select id="speed"><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option></select></div>
-  <div class="section">POLA SERANGAN</div><div class="card plan" id="plan"></div>
-  <div class="section">SETTING PES PS3</div><div class="card"><div class="settingsGrid" id="settings"></div></div>
-  <div class="sliderHead"><span>Support Range</span><span id="supportVal"></span></div><input id="support" type="range" min="1" max="10"/>
-  <div class="sliderHead"><span>Defensive Line</span><span id="lineVal"></span></div><input id="lineSlider" type="range" min="1" max="10"/>
-  <div class="sliderHead"><span>Compactness</span><span id="compactVal"></span></div><input id="compactSlider" type="range" min="1" max="10"/>
-  <div class="section">COACH ANALYSIS</div><div class="card explain" id="explain"></div><div class="card tip explain" id="tip" style="margin-top:10px"></div>
-</section>
-
-<section id="tabMatch" class="tabPage hidden">
-  <div class="hero"><h2>MATCH LAB • 11v11</h2><p>Pilih lawan dan taktiknya. Coach Engine akan membaca pressure, garis pertahanan, compactness dan style lawan, lalu menyiapkan counter tactic.</p></div>
-  <div class="card"><label class="small">TIM KAMU • mengikuti Tactical Lab</label><div id="matchOur" style="font-size:16px;font-weight:900"></div></div>
-  <div class="card matchSelectors" style="margin-top:10px"><div><label class="small">LAWAN</label><select id="matchOppTeam"></select></div><div><label class="small">TAKTIK LAWAN</label><select id="matchOppPreset"></select></div></div>
-  <div class="section">KONDISI PERTANDINGAN</div><div class="stateGrid"><button class="stateBtn active" data-state="NORMAL">0–0 / NORMAL</button><button class="stateBtn" data-state="UNGGUL">SEDANG UNGGUL</button><button class="stateBtn" data-state="TERTINGGAL">TERTINGGAL</button></div>
-  <button class="play" id="matchAnalyze" style="width:100%;margin-top:9px">✦ ANALISIS & BUAT COUNTER TACTIC</button>
-  <div class="card threatRow" style="margin-top:10px"><span class="pill threat" id="matchThreat">THREAT —</span><div class="recommend" id="matchRecommend">Pilih lawan untuk dianalisis</div></div>
-  <div class="matchPitch" id="matchPitch">
-    <div class="pitch"><div class="goal"></div><div class="half"></div><div class="circle"></div><div class="spot"></div><div class="boxTop"></div><div class="boxBottom"></div><div class="sixTop"></div><div class="sixBottom"></div></div>
-    <svg class="matchRoute" id="matchRoute"></svg><div class="matchLayer" id="matchOpponents"></div><div class="matchLayer" id="matchPlayers"></div><div class="matchBall" id="matchBall"></div><div class="matchBadge" id="matchBadge">READY • 11v11</div>
-  </div>
-  <div class="matchActions"><button class="play" id="matchPlay">▶ SIMULASI 11v11</button><button class="save" id="matchApply">✓ PAKAI TAKTIK</button></div>
-  <div class="section">MATCHUP REPORT</div><div class="card report" id="matchReport">Pilih lawan untuk melihat analisis.</div>
-</section>
-
-<section id="tabAcademy" class="tabPage hidden">
-  <div class="hero"><h2>PES3 ACADEMY • CHALLENGE</h2><p>Belajar passing, shooting, bertahan, set piece dan skill. Challenge Mode menilai keputusan dan timing, bukan hanya menampilkan animasi.</p></div>
-  <div class="card scoreCard"><span>PROGRESS</span><b id="academyScore">0 XP • STREAK 0</b></div>
-  <div class="card academySelectors" style="margin-top:10px"><div><label class="small">KATEGORI</label><select id="academyCat"></select></div><div><label class="small">LATIHAN</label><select id="academyDrill"></select></div></div>
-  <div class="academyPitch" id="academyPitch">
-    <div class="apitch"></div><div class="ahalf"></div><div class="acircle"></div><div class="abox"></div><div class="agoal"></div>
-    <svg id="academyRoute"></svg><div id="academyActors"></div><div id="academyBall"></div><div id="academyBadge">READY</div><div id="academyResult"></div>
-    <div class="academyTiming" id="academyTiming"><div class="ideal"></div><div class="marker" id="academyMarker"></div></div>
-  </div>
-  <div class="academyActions"><button class="edit" id="academyPlay">▶ DEMO</button><button class="play" id="academyChallenge">🎮 MULAI CHALLENGE</button></div>
-  <div class="challengeHint" id="challengeHint">Tekan Challenge, tunggu marker mendekati zona emas, lalu pilih aksi.</div>
-  <div class="challengeGrid"><button class="challengeBtn" id="aChoice0">AKSI 1</button><button class="challengeBtn" id="aChoice1">AKSI 2</button><button class="challengeBtn" id="aChoice2">AKSI 3</button><button class="challengeBtn" id="aChoice3">AKSI 4</button></div>
-  <button class="favorite" id="academyReset">↺ RESET LATIHAN</button>
-  <div class="card explain academyInfo" id="academyInfo" style="margin-top:10px"></div>
-  <div class="academyNote">Kontrol memakai konfigurasi default/classic PES PS3. Jika Command Configuration Gembox diubah, ikuti fungsi perintahnya. Timing, power, dan efek dipengaruhi atribut pemain dan situasi.</div>
-</section>
-</div><div class="toast" id="toast"></div>
-
+<div class="toast" id="toast"></div>
+<div class="updateBanner" id="updateBanner" hidden><span>Versi baru tersedia.</span><button id="applyUpdate">UPDATE</button></div>
 
 <script src="./js/core.js"></script>
 <script src="./js/academy.js"></script>
 <script src="./js/ui.js"></script>
 <script src="./js/matchlab.js"></script>
 <script src="./js/challenge.js"></script>
+<script src="./js/v14.js"></script>
 <script src="./js/pwa.js"></script>
 </body>
 </html>
